@@ -1,32 +1,51 @@
-import { block } from 'react-rambo'
-import { getCore } from '../../coreConfig'
+import { ActionClass, ReducerClass } from 'redux-class-decorators'
 
 
-export const UserListBlock = block({
-    name: 'UserList',
-    initialState: {
+class UserListReducer {
+    static initialState = {
         loading: false,
         value: null,
-    },
-    reducer: {
-        start: (state, action) => ({
+    }
+
+    static start(state) {
+        return {
             ...state,
             loading: true,
-        }),
-        finish: (state, action) => ({
+        }
+    }
+
+    static finish(state, action) {
+        return {
             ...state,
             loading: false,
             value: action.payload,
-        }),
-    },
-    methods: {
-        get: (params) => (dispatch, getState) => {
-            const req = getCore().req
-            dispatch('start')
+        }
+    }
+}
 
-            return req.get('/users', params).then((data) => {
-                dispatch('finish', data.json.data)
+UserListReducer = ReducerClass('UserList')(UserListReducer)
+
+
+class UserListActions {
+    static get(page) {
+        return (dispatch) => {
+            dispatch({ type: UserListReducer.start })
+
+            return global.fetch(`https://reqres.in/api/users?page=${page || 1}`).then(response => (
+                response.json()
+            )).then(data => {
+                dispatch({
+                    type: UserListReducer.finish,
+                    payload: data.data,
+                })
             })
-        },
-    },
-})
+        }
+    }
+}
+
+UserListActions = ActionClass(UserListActions)
+
+export {
+    UserListReducer,
+    UserListActions,
+}

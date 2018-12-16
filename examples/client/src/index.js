@@ -1,13 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { getCore } from './coreConfig'
+import { getOctopus } from './octopusConfig'
 import { Provider } from 'react-redux'
 import UserList from './apps/users/UserList'
 import './index.css'
 
 
-const core = getCore()
-const store = core.store.createStore()
+const octopus = getOctopus()
+const store = octopus.store.createStore()
 
 
 ReactDOM.render(

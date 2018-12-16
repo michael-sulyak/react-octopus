@@ -1,21 +1,21 @@
-import Core from '../Core'
+import Octopus from '../Octopus'
 import SSR from './SSR'
 
 
 it('render', async () => {
     let isRendered = false
 
-    const component = props => {
+    const component = () => {
         isRendered = true
         return 'html'
     }
 
-    const core = new Core({
-        modules: [SSR],
+    const octopus = new Octopus({
+        tentacles: [SSR],
         componentForSSR: component,
     })
 
-    await core.ssr.render(
+    await octopus.ssr.render(
         () => {
         },
         () => {

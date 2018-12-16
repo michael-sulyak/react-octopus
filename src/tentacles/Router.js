@@ -12,11 +12,15 @@ export default class Router {
         const core = this.core
         this.routes = data.routes
 
+        if (!this.routes) {
+            throw Error('Routes not defined!')
+        }
+
         // Call componentWillRenderOnServer()
         core.asyncHandle('beforeRenderComponentOnServer', async (data) => {
             const { req } = data
 
-            const [ path, search ] = req.url.split('?')
+            const [path, search] = req.url.split('?')
             const matchingRoutes = matchRoutes(this.routes, path)
 
             for (const { route, match } of matchingRoutes) {

@@ -3,7 +3,7 @@ export default class Logger {
     logging = console
 
     mount(data) {
-        if (data.logging !== undefined) {
+        if (data.logging) {
             this.logging = data.logging
         }
 

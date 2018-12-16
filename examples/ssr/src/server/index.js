@@ -8,8 +8,8 @@ const path = require('path')
 const express = require('express')
 const serialize = require('serialize-javascript')
 const serveStatic = require('serve-static')
-const { Core } = require('react-octopus')
-const { getConfig } = require('../coreConfig')
+const { Octopus } = require('react-octopus')
+const { getConfig } = require('../octopusConfig')
 const assets = require('../../build/asset-manifest.json')
 
 const app = express()
@@ -22,9 +22,9 @@ app.set('view engine', 'ejs')
 
 app.use('/', (req, res) => {
     try {
-        const core = new Core(getConfig())
+        const octopus = new Octopus(getConfig())
 
-        core.ssr.render(req, res).then(data => {
+        octopus.ssr.render(req, res).then(data => {
             res.render('./template.ejs', {
                 initialState: serialize(data.props.store.getState(), { isJSON: true }),
                 assets,

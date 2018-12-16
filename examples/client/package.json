@@ -9,10 +9,10 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-octopus": "link:../..",
-    "react-rambo": "link:../../../react-rambo",
-    "react-redux": "^5.0.7",
-    "react-scripts": "^1.1.4",
+    "react-redux": "^6.0.0",
+    "react-scripts": "^2.1.1",
     "redux": "^4.0.0",
+    "redux-class-decorators": "^3.0.1",
     "redux-logger": "^3.0.6"
   },
   "scripts": {
@@ -20,5 +20,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

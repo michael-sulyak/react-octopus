@@ -1,22 +1,20 @@
-import Core from './Core'
-import Logger from './modules/Logger'
-import Store from './modules/Store'
-import HelmetModule from './modules/HelmetModule'
-import Requests from './modules/Requests'
-import SSR from './modules/SSR'
-import Router from './modules/Router'
+import Octopus from './Octopus'
+import Logger from './tentacles/Logger'
+import Store from './tentacles/Store'
+import HelmetTentacle from './tentacles/HelmetTentacle'
+import SSR from './tentacles/SSR'
+import Router from './tentacles/Router'
 
 
-const modules = {
+const tentacles = {
     Logger,
     Store,
-    Helmet: HelmetModule,
-    Requests,
+    Helmet: HelmetTentacle,
     SSR,
     Router,
 }
 
 export {
-    Core,
-    modules,
+    Octopus,
+    tentacles,
 }

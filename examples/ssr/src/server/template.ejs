@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <%- helmet.title.toString() %>
     <%- helmet.meta.toString() %>
-    <link href="/<%= assets['main.css'] %>" rel="stylesheet">
+    <link href="<%= assets['main.css'] %>" rel="stylesheet">
     <%- helmet.link.toString() %>
 </head>
 
@@ -17,7 +17,7 @@
     window.__INITIAL_STATE__=<%- initialState %>
 </script>
 
-<script src="/<%= assets['main.js'] %>"></script>
+<script src="<%= assets['main.js'] %>"></script>
 
 </body>
 

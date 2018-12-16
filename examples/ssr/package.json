@@ -8,14 +8,14 @@
     "isomorphic-fetch": "^2.2.1",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
-    "react-octopus": "link:../..",
-    "react-rambo": "link:../../../react-rambo",
     "react-dom": "^16.5.2",
-    "react-redux": "^5.0.7",
+    "react-octopus": "link:../..",
+    "react-redux": "^6.0.0",
     "react-router-config": "^1.0.0-beta.4",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "^1.1.4",
+    "react-scripts": "^2.1.1",
     "redux": "^4.0.0",
+    "redux-class-decorators": "^3.0.1",
     "redux-logger": "^3.0.6"
   },
   "scripts": {
@@ -53,5 +53,11 @@
     "ignore-styles": "^5.0.1",
     "nodemon": "^1.18.4",
     "serialize-javascript": "^1.5.0"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

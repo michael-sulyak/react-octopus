@@ -17,13 +17,12 @@
     - [npm](#npm)
     - [yarn](#yarn)
 - [How To Use](#how-to-use)
-- [Ready Solutions (modules)](#ready-solutions-modules)
-    - [modules.Store (Redux)](#modulesstore-redux)
-    - [modules.Router](#modulesrouter)
-    - [modules.SSR](#modulesssr)
-    - [modules.Requests](#modulesrequests)
-    - [modules.Helmet](#moduleshelmet)
-- [How To Create A New Module](#how-to-create-a-new-module)
+- [Ready Solutions (tentacles)](#ready-solutions-tentacles)
+    - [tentacles.Store (Redux)](#tentaclesstore-redux)
+    - [tentacles.Router](#tentaclesrouter)
+    - [tentacles.SSR](#tentaclesssr)
+    - [tentacles.Helmet](#tentacleshelmet)
+- [How To Create A New Tentacle](#how-to-create-a-new-tentacle)
 - [License](#license)
 
 ---
@@ -65,32 +64,32 @@ $ yarn add --dev express isomorphic-fetch
 * [First](https://github.com/expert-m/react-octopus/tree/master/examples/client) ([Demo](https://expert-m.github.io/react-octopus/))
 * [Second](https://github.com/expert-m/react-octopus/tree/master/examples/ssr) (with SSR)
 
-`react-octopus` includes many ready solutions (`modules`) for different purposes. A list of `modules` must be specified when creating `Core`.
+`react-octopus` includes many ready solutions (`tentacles`) for different purposes. A list of `tentacles` must be specified when creating `Octopus`.
 ```js
 const config = {
-    modules: [modules.Store],
+    tentacles: [tentacles.Store],
 }
 
 // Different variants of creation:
-core = new Core(config)
-core = Core.getInstance(config) // Use singleton pattern
-core = Core.getInstance(() => config) // Calls a function if `Core` is not created
+core = new Octopus(config)
+core = Octopus.getInstance(config) // Use singleton pattern
+core = Octopus.getInstance(() => config) // Calls a function if `Octopus` is not created
 ```
-By adding modules you can change a behavior of your application.
+By adding `tentacles` you can change a behavior of your application.
 
 Examples:
 
-- [modules.Store](#modulesstore-redux) - allows you to create `Redux` store through `Core`.
-- [modules.Store](#modulesstore-redux), [modules.SSR](#modulesssr) - now you can easily render your application on a server.
-- [modules.Store](#modulesstore-redux), [modules.SSR](#modulesssr), [modules.Helmet](#moduleshelmet), [modules.Router](#modulesrouter) - this adds data for document head (`title`, `meta`, etc) and routing via `react-router`.
+- [tentacles.Store](#tentaclesstore-redux) - allows you to create `Redux` store through `Octopus`.
+- [tentacles.Store](#tentaclesstore-redux), [tentacles.SSR](#tentaclesssr) - now you can easily render your application on a server.
+- [tentacles.Store](#modulesstore-redux), [tentacles.SSR](#tentaclesssr), [tentacles.Helmet](#tentacleshelmet), [modules.Router](#tentaclesrouter) - this adds data for document head (`title`, `meta`, etc) and routing via `react-router`.
 
 [back to top](#table-of-contents)
 
 ---
 
-## Ready Solutions (modules)
+## Ready Solutions (tentacles)
 
-#### modules.Store (Redux)
+#### tentacles.Store (Redux)
 Dependencies: `redux`, `redux-thunk`.
 ```bash
 $ npm install redux redux-thunk
@@ -98,8 +97,8 @@ $ npm install redux redux-thunk
 
 Example:
 ```js
-const core = new Core({
-    modules: [modules.Store, ...],
+const octopus = new Octopus({
+    tentacles: [tentacles.Store, ...],
     store: {
         initialState: {},
         middleware: [createLogger()], // logger for Redux
@@ -113,7 +112,7 @@ See [React Redux](https://github.com/reduxjs/react-redux).
 
 ---
 
-#### modules.Router
+#### tentacles.Router
 Dependencies: `react-router`, `react-router-config`, `react-router-dom`.
 ```bash
 $ npm install react-router react-router-config react-router-dom
@@ -127,8 +126,8 @@ const routes = [{
     routes: [{ path: '/', component: UserList }],
 }]
 
-const core = new Core({
-    modules: [modules.Router, ...],
+const octopus = new Octopus({
+    tentacles: [tentacles.Router, ...],
     routes: routes, // routes for SSR
 })
 ```
@@ -140,7 +139,7 @@ See [React Router](https://github.com/ReactTraining/react-router).
 
 ---
 
-#### modules.SSR
+#### tentacles.SSR
 > Server-side rendering :sunglasses:
 
 Dependencies: `express`, `react-dom`, `serialize-javascript`.
@@ -148,7 +147,7 @@ Dependencies: `express`, `react-dom`, `serialize-javascript`.
 $ npm install express react-dom serialize-javascript
 ```
 
-- You have to install [isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch) if you want to use module [modules.Requests](#modulesrequests) in SSR:
+- You have to install [isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch) if you want to use module [tentacles.Requests](#modulesrequests) in SSR:
 ```bash
 $ npm install isomorphic-fetch
 ```
@@ -161,7 +160,7 @@ const express = require('express')
 const app = express()
 
 app.use('/', (req, res) => {
-    const core = new Core(coreConfig)
+    const octopus = new Octopus(coreConfig)
 
     core.ssr.render(req, res).then(data => {
         res.render('./template.ejs', {
@@ -177,56 +176,8 @@ app.use('/', (req, res) => {
 
 ---
 
-#### modules.Requests
-Dependencies: `isomorphic-fetch` (only for [modules.SSR](#modulesssr)).
-```bash
-$ npm install isomorphic-fetch
-```
-
-Example:
-```js
-const core = new Core({
-    modules: [modules.Requests, ...],
-    requests: {
-        middlewares: {
-            prepareData: (data) => {
-                data.headers['Content-Type'] = 'application/json'
-                data.body = data.body && JSON.stringify(data.body)
-            },
-            prepareResult: (response) => (
-                response.json().then(json => ({
-                    json,
-                    response,
-                    status: response.status,
-                    ok: response.ok,
-                }))
-            ),
-        },
-        defaultHost: 'https://reqres.in/api', // now you can write: req.get('/users/59/')
-    },
-})
-
-core.req.get('/users', params).then((data) => {
-    console.log(data.ok)
-    console.log(data.json)
-    console.log(data.status)
-    console.log(data.response)
-})
-
-core.req.put('https://example2.com/api/users/50', data, headers).then(...)
-core.req.post('https://example2.com/api/users/50', data, headers).then(...)
-core.req.path('https://example2.com/api/users/50', data, headers).then(...)
-core.req.purge('https://example2.com/api/users/50', data, headers).then(...)
-
-core.req.fetch('get', 'https://example2.com/api/users', data, headers).then(...)
-```
-
-[back to top](#table-of-contents)
-
----
-
-#### modules.Helmet
-> Adds `Helmet` data for [modules.SSR](#modulesssr).
+#### tentacles.Helmet
+> Adds `Helmet` data for [tentacles.SSR](#tentaclesssr).
 
 Dependencies: `react-helmet`.
 ```bash
@@ -240,7 +191,7 @@ See [React Helmet](https://github.com/nfl/react-helmet).
 ---
 
 ## How To Create A New Module
-See [/src/modules/](https://github.com/expert-m/react-octopus/tree/master/src/modules).
+See [/src/tentacles/](https://github.com/expert-m/react-octopus/tree/master/src/tentacles).
 
 [back to top](#table-of-contents)
 

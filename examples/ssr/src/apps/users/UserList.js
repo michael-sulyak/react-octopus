@@ -2,13 +2,18 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import PropTypes from 'prop-types'
-import { UserListBlock } from './blocks'
+import { UserListActions } from './blocks'
 
 
 class UserList extends Component {
+    static propTypes = {
+        userList: PropTypes.object,
+        getUserList: PropTypes.func,
+    }
+
     static componentWillRenderOnServer(core, props) {
         return Promise.all([
-            UserListBlock.get({ page: 3 })(props.store.dispatch, props.store.getState),
+            UserListActions.get({ page: 3 })(props.store.dispatch, props.store.getState),
         ])
     }
 
@@ -42,17 +47,12 @@ class UserList extends Component {
     }
 }
 
-UserList.propTypes = {
-    userList: PropTypes.object,
-    getUserList: PropTypes.func,
-}
-
 const mapStateToProps = (state) => ({
     userList: state.users.list,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    getUserList: bindActionCreators(UserListBlock.get, dispatch),
+    getUserList: bindActionCreators(UserListActions.get, dispatch),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserList)

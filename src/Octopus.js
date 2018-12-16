@@ -1,70 +1,71 @@
-import Logger from './modules/Logger'
+import Logger from './tentacles/Logger'
 
 
-class Core {
-    moduleNames = []
+export default class Octopus {
+    tentacleNames = []
     handlers = {}
     asyncHandlers = {}
 
     constructor(data) {
         this.debug = !!data.debug
 
-        for (let module of data.modules || []) {
-            this._registerModule(module)
+        for (const tentacle of data.tentacles || []) {
+            this._addTentacle(tentacle)
         }
 
         // Must have logger
-        if (this.logger === undefined) {
-            this._registerModule(Logger)
+        if (!this.logger) {
+            this._addTentacle(Logger)
         }
 
-        const moduleNames = [...this.moduleNames]
+        const tentacleNames = [...this.tentacleNames]
 
-        for (const moduleName of moduleNames) {
-            const isMounted = this[moduleName].mount(data)
+        for (const tentacleName of tentacleNames) {
+            const isMounted = this[tentacleName].mount(data)
 
             if (!isMounted) {
-                this._unresgisterModule(this[moduleName])
+                this._removeTentacle(this[tentacleName])
             }
         }
     }
 
     static getInstance(data) {
-        if (!Core._instance) {
-            Core._instance = new Core(data instanceof Function ? data() : data)
+        if (!Octopus._instance) {
+            const initialData = data instanceof Function ? data() : data
+            Octopus._instance = new Octopus(initialData)
         }
 
-        return Core._instance
+        return Octopus._instance
     }
 
-    _registerModule(Module) {
-        const instance = new Module(this)
+    _addTentacle(Tentacle) {
+        const instance = new Tentacle(this)
 
         if (instance.name in this) {
-            throw new Error(`Module '${Module.name}' already exists.`)
+            throw new Error(`Tentacle '${Tentacle.name}' already exists.`)
         }
 
         this[instance.name] = instance
-        this.moduleNames.push(instance.name)
+        this.tentacleNames.push(instance.name)
     }
 
-    _unresgisterModule(module) {
-        const moduleName = module.name
-        delete this[moduleName]
+    _removeTentacle(tentacle) {
+        const tentacleName = tentacle.name
+        delete this[tentacleName]
 
-        const index = this.moduleNames.indexOf(moduleName)
+        const index = this.tentacleNames.indexOf(tentacleName)
 
         if (index > -1) {
-            this.moduleNames.splice(index, 1)
+            this.tentacleNames.splice(index, 1)
         }
 
         if (this.debug) {
-            this.logger.warn(`Module '${moduleName}' is removed from the core. 😭`, 'core')
+            this.logger.warn(`Tentacle '${tentacleName}' is removed from the Octopus. 😭`, '🐙')
         }
     }
 
-    hasModule(moduleName) {
-        return this.moduleNames.indexOf(moduleName) > -1
+    hasTentacle(tentacleName) {
+        return this.tentacleNames.indexOf(tentacleName) > -1
     }
 
     handle(eventName, handler) {
@@ -102,7 +103,7 @@ class Core {
     about(logger) {
         logger = logger || this.logger.getWithPrefix('i')
 
-        logger.log('About \'core\' 🔥')
+        logger.log('About \'octopus\' 🔥')
 
         logger.logList('Modules', this.moduleNames)
         logger.logList('Handler events', Object.keys(this.handlers))
@@ -110,7 +111,7 @@ class Core {
         for (const moduleName of this.moduleNames) {
             if (this[moduleName].about instanceof Function) {
                 logger.log('')
-                logger.log(`About 'core.${moduleName}' 🔥`)
+                logger.log(`About 'octopus.${moduleName}' 🔥`)
                 this[moduleName].about(logger)
             }
         }
@@ -118,5 +119,3 @@ class Core {
         logger.log('')
     }
 }
-
-export default Core
