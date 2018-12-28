@@ -1,6 +1,6 @@
 {
   "name": "react-octopus",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "Develop your React applications quickly and easily!",
   "author": "expert-m",
   "license": "MIT",
@@ -67,7 +67,7 @@
     "react-dom": "^16.5.2",
     "react-helmet": "^5.2.0",
     "react-router": "^4.3.1",
-    "react-router-config": "^4.4.0-beta.6",
+    "react-router-config": "^1.0.0-beta.4",
     "react-scripts": "^2.1.1",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",

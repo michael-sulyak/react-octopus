@@ -11,6 +11,7 @@
     "react-dom": "^16.5.2",
     "react-octopus": "link:../..",
     "react-redux": "^6.0.0",
+    "react-router": "^4.3.1",
     "react-router-config": "^1.0.0-beta.4",
     "react-router-dom": "^4.3.1",
     "react-scripts": "^2.1.1",
