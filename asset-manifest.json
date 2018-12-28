@@ -1,13 +1,13 @@
 {
-  "main.css": "/react-octopus/static/css/main.560de242.chunk.css",
-  "main.js": "/react-octopus/static/js/main.07624fb2.chunk.js",
-  "main.js.map": "/react-octopus/static/js/main.07624fb2.chunk.js.map",
-  "static/js/1.8697a825.chunk.js": "/react-octopus/static/js/1.8697a825.chunk.js",
-  "static/js/1.8697a825.chunk.js.map": "/react-octopus/static/js/1.8697a825.chunk.js.map",
+  "main.css": "/react-octopus/static/css/main.f9ef4db1.chunk.css",
+  "main.js": "/react-octopus/static/js/main.cfc9dcfc.chunk.js",
+  "main.js.map": "/react-octopus/static/js/main.cfc9dcfc.chunk.js.map",
+  "static/js/1.bcca6280.chunk.js": "/react-octopus/static/js/1.bcca6280.chunk.js",
+  "static/js/1.bcca6280.chunk.js.map": "/react-octopus/static/js/1.bcca6280.chunk.js.map",
   "runtime~main.js": "/react-octopus/static/js/runtime~main.b8d45ee6.js",
   "runtime~main.js.map": "/react-octopus/static/js/runtime~main.b8d45ee6.js.map",
-  "static/css/main.560de242.chunk.css.map": "/react-octopus/static/css/main.560de242.chunk.css.map",
+  "static/css/main.f9ef4db1.chunk.css.map": "/react-octopus/static/css/main.f9ef4db1.chunk.css.map",
   "index.html": "/react-octopus/index.html",
-  "precache-manifest.d95fd557e28b8dcd3aaf6e9383bac05a.js": "/react-octopus/precache-manifest.d95fd557e28b8dcd3aaf6e9383bac05a.js",
+  "precache-manifest.b4150c891a61c8115dc6de624462b608.js": "/react-octopus/precache-manifest.b4150c891a61c8115dc6de624462b608.js",
   "service-worker.js": "/react-octopus/service-worker.js"
 }
