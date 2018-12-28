@@ -101,8 +101,8 @@ const octopus = new Octopus({
     tentacles: [tentacles.Store, ...],
     store: {
         initialState: {},
-        middleware: [createLogger()], // logger for Redux
-    }
+        enhancer: applyMiddleware(thunk, createLogger()),
+    },
 })
 ```
 
@@ -145,11 +145,6 @@ See [React Router](https://github.com/ReactTraining/react-router).
 Dependencies: `express`, `react-dom`, `serialize-javascript`.
 ```bash
 $ npm install express react-dom serialize-javascript
-```
-
-- You have to install [isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch) if you want to use module [tentacles.Requests](#modulesrequests) in SSR:
-```bash
-$ npm install isomorphic-fetch
 ```
 
 Example:

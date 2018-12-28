@@ -6,8 +6,8 @@ export default class SSR {
     name = 'ssr'
     componentForSSR = null
 
-    constructor(core) {
-        this.core = core
+    constructor(octopus) {
+        this.octopus = octopus
     }
 
     mount(data) {
@@ -16,7 +16,7 @@ export default class SSR {
     }
 
     async render(req, res) {
-        const core = this.core
+        const octopus = this.octopus
         const data = {
             props: {
                 location: req.url,
@@ -26,12 +26,12 @@ export default class SSR {
             res,
         }
 
-        await core.asyncEvent('beforeCreateElementOnServer', data)
+        await octopus.asyncEvent('beforeCreateElementOnServer', data)
         const element = React.createElement(this.componentForSSR, data.props)
 
-        await core.asyncEvent('beforeRenderComponentOnServer', data)
+        await octopus.asyncEvent('beforeRenderComponentOnServer', data)
         data.html = ReactDOMServer.renderToString(element)
-        await core.asyncEvent('afterRenderComponentOnServer', data)
+        await octopus.asyncEvent('afterRenderComponentOnServer', data)
 
         return new Promise(resolve => resolve(data))
     }

@@ -1,27 +1,23 @@
-import { applyMiddleware, createStore } from 'redux'
-import thunk from 'redux-thunk'
+import { createStore } from 'redux'
 
 
 export default class Store {
     name = 'store'
     reducer = (state) => state
     initialState = {}
-    middleware = [thunk]
+    enhancer = undefined
 
-    constructor(core) {
-        this.core = core
+    constructor(octopus) {
+        this.octopus = octopus
     }
 
     mount(data) {
         const config = data.store || {}
         this.initialState = config.initialState || this.initialState
-        this.middleware = [
-            ...this.middleware,
-            ...config.middleware || [],
-        ]
+        this.enhancer = config.enhancer || this.enhancer
         this.reducer = config.reducer || this.reducer
 
-        this.core.asyncHandle('beforeCreateElementOnServer', data => {
+        this.octopus.asyncHandle('beforeCreateElementOnServer', data => {
             data.props.store = this.createStore()
         })
 
@@ -32,10 +28,10 @@ export default class Store {
         const dataForStore = {
             reducer: this.reducer,
             preloadedState: this.initialState,
-            enhancer: applyMiddleware(...this.middleware),
+            enhancer: this.enhancer,
         }
 
-        this.core.event('beforeCreateStore', dataForStore)
+        this.octopus.event('beforeCreateStore', dataForStore)
 
         const store = createStore(
             dataForStore.reducer,
@@ -43,7 +39,7 @@ export default class Store {
             dataForStore.enhancer,
         )
 
-        this.core.event('afterCreateStore', store)
+        this.octopus.event('afterCreateStore', store)
 
         return store
     }

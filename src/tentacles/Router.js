@@ -4,12 +4,12 @@ import { matchRoutes } from 'react-router-config'
 export default class Router {
     name = 'router'
 
-    constructor(core) {
-        this.core = core
+    constructor(octopus) {
+        this.octopus = octopus
     }
 
     mount(data) {
-        const core = this.core
+        const octopus = this.octopus
         this.routes = data.routes
 
         if (!this.routes) {
@@ -17,7 +17,7 @@ export default class Router {
         }
 
         // Call componentWillRenderOnServer()
-        core.asyncHandle('beforeRenderComponentOnServer', async (data) => {
+        octopus.asyncHandle('beforeRenderComponentOnServer', async (data) => {
             const { req } = data
 
             const [path, search] = req.url.split('?')
@@ -33,17 +33,17 @@ export default class Router {
                     },
                 }
 
-                await core.asyncEvent('componentWillRenderOnServer', props)
+                await octopus.asyncEvent('componentWillRenderOnServer', props)
                 const componentWillRenderOnServer = route.component.componentWillRenderOnServer
 
                 if (componentWillRenderOnServer instanceof Function) {
-                    await componentWillRenderOnServer(core, props)
+                    await componentWillRenderOnServer(octopus, props)
                 }
             }
         })
 
         // Add status for HTTP response or redirect
-        core.asyncHandle('afterRenderComponentOnServer', data => {
+        octopus.asyncHandle('afterRenderComponentOnServer', data => {
             const { res, props } = data
 
             if (props.context.url) {

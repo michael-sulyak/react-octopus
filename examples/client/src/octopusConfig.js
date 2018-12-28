@@ -1,7 +1,8 @@
-import { combineReducers } from 'redux'
+import { applyMiddleware, combineReducers } from 'redux'
 import { Octopus, tentacles } from 'react-octopus'
 import { createLogger } from 'redux-logger'
 import { UserListReducer } from './apps/users/blocks'
+import thunk from 'redux-thunk'
 
 
 export function getConfig() {
@@ -17,7 +18,7 @@ export function getConfig() {
         ],
         debug: true,
         store: {
-            middleware: [createLogger()],
+            enhancer: applyMiddleware(thunk, createLogger()),
             reducer: reducer,
         },
     }

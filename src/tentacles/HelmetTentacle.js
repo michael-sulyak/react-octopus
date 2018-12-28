@@ -4,12 +4,12 @@ import { Helmet } from 'react-helmet'
 export default class HelmetModule {
     name = 'helmet'
 
-    constructor(core) {
-        this.core = core
+    constructor(octopus) {
+        this.octopus = octopus
     }
 
     mount(data) {
-        this.core.asyncHandle('afterRenderComponentOnServer', data => {
+        this.octopus.asyncHandle('afterRenderComponentOnServer', data => {
             data.helmet = Helmet.renderStatic()
         })
 

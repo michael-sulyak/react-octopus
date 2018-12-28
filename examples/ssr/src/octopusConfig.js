@@ -1,7 +1,8 @@
 import { Octopus, tentacles } from 'react-octopus'
 import { createLogger } from 'redux-logger'
 import { UserListReducer } from './apps/users/blocks'
-import { combineReducers } from 'redux'
+import { applyMiddleware, combineReducers } from 'redux'
+import thunk from 'redux-thunk'
 
 
 export function getConfig() {
@@ -19,18 +20,17 @@ export function getConfig() {
         ],
         debug: true,
         store: {
-            middleware: [createLogger()],
+            enhancer: applyMiddleware(thunk, createLogger()),
             reducer: reducer,
         },
         componentForSSR: require('./components/AppServer').default,
-        routes: require('./routes').default
+        routes: require('./routes').default,
     }
 
     if (global.IS_SERVER) {
         config.tentacles.push(tentacles.SSR)
     } else {
         config.store.initialState = window.__INITIAL_STATE__
-        config.store.middleware = [createLogger()]
     }
 
     return config
