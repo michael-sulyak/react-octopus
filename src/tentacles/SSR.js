@@ -21,6 +21,8 @@ export default class SSR {
             props: {
                 location: req.url,
                 context: {},
+                req,
+                res,
             },
             req,
             res,
