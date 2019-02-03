@@ -1,6 +1,6 @@
 {
   "name": "react-octopus",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0-beta.3",
   "description": "Develop your React applications quickly and easily!",
   "author": "expert-m",
   "license": "MIT",
@@ -71,12 +71,12 @@
     "react-scripts": "^2.1.1",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
-    "rollup": "^0.68.0",
+    "rollup": "^1.1.2",
     "rollup-plugin-babel": "^4.0.3",
     "rollup-plugin-commonjs": "^9.1.8",
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-peer-deps-external": "^2.2.0",
-    "rollup-plugin-postcss": "^1.6.2",
+    "rollup-plugin-postcss": "^2.0.3",
     "rollup-plugin-url": "^2.1.0"
   },
   "files": [
